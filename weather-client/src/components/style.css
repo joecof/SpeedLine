@@ -1,0 +1,12 @@
+.MuiDrawer-paperAnchorDockedLeft {
+  width: 20% !important;
+}
+
+.Drawer {
+  text-align: center;
+}
+
+.button {
+  height: 75px;
+  font-size: 18pt;
+}

@@ -1,0 +1,29 @@
+{
+  "name": "speedline",
+  "version": "1.0.0",
+  "description": "A Weather System Application for SpeedLine",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "nodemon server.js",
+    "client": "cd weather-client && npm start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joecof/SpeedLine.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joecof/SpeedLine/issues"
+  },
+  "homepage": "https://github.com/joecof/SpeedLine#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "concurrently": "^5.1.0",
+    "ec-weather": "^1.0.0",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.2"
+  }
+}
