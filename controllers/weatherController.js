@@ -6,7 +6,7 @@ exports.getWeather = (req, res, next) => {
   const promises = [];
   for(let i = 0; i < data.cities.length; i++) {
     promises.push(
-      ecweather(data.cities[i])
+      ecweather(data.cities[i]) 
         .then(result => {
           const resultData = {
             city: result.title.split(' - ')[0],
@@ -29,17 +29,4 @@ exports.getWeather = (req, res, next) => {
         weatherData: result
       })
   })
-}
-
-function genRand(min, max, decimalPlaces) {  
-  var rand = Math.random() < 0.5 ? ((1-Math.random()) * (max-min) + min) : (Math.random() * (max-min) + min);  
-  var power = Math.pow(10, decimalPlaces);
-  return Math.floor(rand*power) / power;
-}
-
-function generateCoordinates(lat1 , lat2, lng1, lng2) {
-
-  const lat = genRand(lat2, lat1, 5)
-  const lng = genRand(lng2, lng1, 5)
- 
 }

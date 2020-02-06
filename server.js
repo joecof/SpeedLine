@@ -2,7 +2,7 @@ const express = require('express');
 const app = express(); 
 const bodyParser = require('body-parser');
 const routes = require('./routes/routes')
-const PATH = 3001; 
+const PORT = 3001; 
 
 app.use(bodyParser.urlencoded({
   extended: true
@@ -23,6 +23,6 @@ app.use((req, res, next) => {
 
 app.use('/api', routes);
 
-app.listen(PATH, () => {
-  console.log(`listening on port ${PATH}`);
+app.listen(PORT, () => {
+  console.log(`listening on port ${PORT}`);
 })
