@@ -1,2 +1,2 @@
 # SpeedLine
-A Weather System App 
+A Weather System Application for SpeedLine
