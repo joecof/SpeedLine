@@ -13,6 +13,10 @@ To start type into your terminal:
       npm start
 
  The project should begin, and the project can be visited at localhost:3000 
+ 
+ Or visit the demo here: https://speedline-weathersystem.herokuapp.com/
+ (Developers overlay)
+
   
   
 Key features: 
