@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "concurrently \"npm run server\" \"npm run client\"",
     "server": "nodemon server.js",
-    "client": "cd weather-client && npm start"
+    "client": "cd .. && cd weather-client && npm start"
   },
   "repository": {
     "type": "git",

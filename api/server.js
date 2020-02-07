@@ -11,7 +11,6 @@ app.use(bodyParser.json());
 
 // **************************************************************************** //
 //                    Gets Around CORS ISSUE                                    // 
-//            Will be unneccesary once we serve the build file                  // 
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');

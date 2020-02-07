@@ -1,12 +1,17 @@
 import React, { Component } from 'react'
-import {GoogleApiWrapper, Map, Marker, Circle, InfoWindow, Polygon} from 'google-maps-react';
+import { GoogleApiWrapper, Map, Marker, InfoWindow} from 'google-maps-react';
 import snow from '../images/snow.png'
 import cloud from '../images/cloud.png'
+import fog from '../images/fog.png'
 import sun from '../images/sun.png'
+import rain from '../images/rain.png'
+import logo from '../images/logo.png'
+import defaultCondition from '../images/default.png'
+import constants from '../constants/constants';
 import agent from '../api/agent';
 import Drawer from '@material-ui/core/Drawer';
+import Button from '@material-ui/core/Button';
 import './style.css'
-
 
 export class MapContainer extends Component {
 
@@ -16,117 +21,153 @@ export class MapContainer extends Component {
     this.state = ({
       data: [],
       center: {
-        lat: 49.2500,
-        lng: -123.0000
+        lat: constants.DEFAULT_CENTER.lat, 
+        lng: constants.DEFAULT_CENTER.lng
       },
-      zoom: 5
+      zoom: constants.DEFAULT_ZOOM,
+      showingInfoWindow: false,
+      activeMarker: {},
+      currentCity: {}
     })
 
     this.mapClicked = this.mapClicked.bind(this);
     this.markerClick = this.markerClick.bind(this);
     this.menuClick = this.menuClick.bind(this);
     this.generateWeatherImage = this.generateWeatherImage.bind(this);
-
-
+    this.loadData = this.loadData.bind(this);
   }
 
   componentDidMount() {
-    agent.weatherForecast.getWeatherData()
-      .then(response  => {
-        this.setState({ data: response })
-      })
-      .catch(err => {
-        console.log(err);
-      })
+    this.loadData()
+    this.weatherUpdater = setInterval(this.loadData, 600000);
   }
 
-  mapClicked(mapProps, map, clickEvent) {
-    console.log("map click")
+  componentWillUnmount() {
+    clearInterval(this.weatherUpdater);
   }
+
+  async loadData() {
+    try {
+      const response = await agent.weatherForecast.getWeatherData();
+
+      if(!response) {
+        throw new Error('No weather data found.');
+      }
+
+      this.setState({
+        data: response
+      })
+   } catch (e) {
+       console.log(e);
+   }
+ }
 
   menuClick(city, e) {
-    console.log("city click")
     this.setState({
       center: {
         lat: city.coordinates.lat,
         lng: city.coordinates.lng,
       },
-      zoom: 10
+      zoom: 9
     })
+  }
+
+  mapClicked() {
+    if (this.state.showingInfoWindow) {
+      this.setState({
+        showingInfoWindow: false,
+        activeMarker: null
+      })
+    }
   }
 
   markerClick(props, marker, e) {
     this.setState({
-      center: {
-        lat: marker.position.lat(),
-        lng: marker.position.lng()
-      },
-      zoom: 11
+      activeMarker: marker,
+      showingInfoWindow: true,
+      currentCity: props.data
     })
   }
 
   generateWeatherImage(currentCondition) {
+    const condition = currentCondition.toString().toLowerCase(); 
 
-    const condition = currentCondition.toString(); 
-    if(condition.includes("Snow")) {
+    if(condition.includes("snow")) {
       return snow;
-    } else if (condition.includes("Cloudy")){
+    } else if (condition.includes("cloudy")){
       return cloud;
-    } else if (condition.includes("Clear")){
+    } else if (condition.includes("clear")){
+      return sun;
+    } else if (condition.includes("rain")){
+      return rain;
+    } else if (condition.includes("mist")){
+      return fog;
+    } else if (condition.includes("fog")){
+      return fog;
+    } else if (condition.includes("sunny")){
       return sun;
     } else {
-      return snow;
+      return defaultCondition;
     }
-
   }
   
   render() {
-
     return(
-      <div>
-      <Drawer open={true} variant="permanent" className = "Drawer">
-        <h1> Weather System </h1>
-         {
-          this.state.data.weatherData != null &&
-          this.state.data.weatherData.map( (item, i) => (
-          <button key={i} onClick={() => this.menuClick(item)} className = "button">{item.city}</button>
-        ))} 
-      </Drawer>
-      <Map 
-        style={{width: '80%', height: '100%', position: 'relative', float: 'right'}}
-        google={this.props.google} 
-        zoom={9}
-        initialCenter={{
-          lat: 58.4374, 
-          lng: -129.9994
+      <>
+        <Drawer open={true} variant="permanent" className = "Drawer">
+          <img src={logo} style = {{width: '30%', margin: '0 auto'}} alt = "speedline logo"></img>
+          <h1> Weather System </h1>
+          <Button onClick={() => {this.setState({center: { lat: 53.9171, lng: -122.7497}, zoom: 5})}} color="secondary" className = "button">All Cities</Button>
+          {
+            this.state.data.weatherData != null &&
+            this.state.data.weatherData.map( (item, i) => (
+            <Button key={i} onClick={() => this.menuClick(item)} color="primary" className = "button" >{item.city}</Button>
+          ))} 
+        </Drawer>
+        <Map 
+          style={{width: '80%', height: '100%', position: 'relative', float: 'right'}}
+          google={this.props.google} 
+          center = {{
+            lat: this.state.center.lat,
+            lng: this.state.center.lng
           }}
-        center = {{
-          lat: this.state.center.lat,
-          lng: this.state.center.lng
-        }}
-        zoom = {this.state.zoom}
-        onClick={this.mapClicked}>
-        {
-          this.state.data.weatherData != null &&
-          this.state.data.weatherData.map((marker, i) => (
-          <Marker
-            key = {i}
-            onClick={this.markerClick}
-            name={'Current location'} 
-            title={'The marker`s title will appear as a tooltip.'}
-            icon={{
-              url: this.generateWeatherImage(this.state.data.weatherData[i].currentConditions),
-              scaledSize: new this.props.google.maps.Size(30,30)
-            }}
-            position={{lat: marker.coordinates.lat, lng: marker.coordinates.lng}} 
-          />
-        ))} 
-    </Map>
-    </div>
+          zoom = {this.state.zoom}
+          onClick={this.mapClicked}>
+          {
+            this.state.data.weatherData != null &&
+            this.state.data.weatherData.map((marker, i) => (
+            <Marker
+              key = {i}
+              onClick={this.markerClick}
+              data = {marker}
+              name={'Current location'} 
+              icon={{
+                url: this.generateWeatherImage(this.state.data.weatherData[i].currentConditions),
+                scaledSize: new this.props.google.maps.Size(40,40)
+              }}
+              position={{lat: marker.coordinates.lat, lng: marker.coordinates.lng}} 
+            >
+            </Marker>
+          ))} 
+
+          {
+            this.state.data.weatherData != null &&
+            <InfoWindow
+              marker={this.state.activeMarker}
+              visible={this.state.showingInfoWindow}>
+                <div>
+                  <p>{this.state.currentCity.city}</p>
+                  <p>{this.state.currentCity.currentConditions}</p>
+                </div>
+            </InfoWindow>
+          }
+         
+      </Map>
+    </>
     )
   }
 }
 
 export default GoogleApiWrapper({
-  apiKey: ('AIzaSyD23xqn0jkx4uzRBASktvUdKBl37vgDH50')
+  apiKey: ('AIzaSyD23xqn0jkx4uzRBASktvUdKBl37vgDH50'),
 })(MapContainer)
