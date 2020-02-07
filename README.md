@@ -2,10 +2,6 @@
 
 A Weather System App as part of the Developer Evaluation Project from SpeedLine Solutions.
 
-RESTful API service developed with Node. 
-
-Front-end developed with React/Material UI & Google Maps (react-google-maps)
-
 To start type into your terminal: 
 
       git clone https://github.com/joecof/SpeedLine.git
@@ -30,3 +26,9 @@ Key features:
   
 
 ![Alt text](https://i.ibb.co/t8pWDj5/Screen-Shot-2020-02-06-at-11-40-59-PM.png "When Clicking a Marker")
+
+
+
+RESTful API service developed with Node. 
+
+Front-end developed with React/Material UI & Google Maps (react-google-maps)
