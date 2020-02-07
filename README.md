@@ -11,7 +11,7 @@ To start type into your terminal:
       cd api 
       npm install 
   
-      npm start (start point is inside directory api) 
+      npm start 
 
  The project should begin, and the project can be visited at localhost:3000 
  
