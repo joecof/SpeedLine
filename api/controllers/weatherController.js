@@ -1,13 +1,19 @@
 const ecweather = require('ec-weather');
 const data = require('../data');
 
+/**
+ * Gets weather data using the ec-weather API to obtain weather data 
+ * from Environment Canada
+ */
 exports.getWeather = async (req, res, next) => {
   try {
+    
     const promises = [];
     const responses = [];
     for(let i = 0; i < data.cities.length; i++) {
       promises.push(ecweather(data.cities[i]))
     }
+
     results = await Promise.all(promises);
 
     if(!results) {
@@ -19,7 +25,6 @@ exports.getWeather = async (req, res, next) => {
         city: results[i].title.split(' - ')[0],
         currentConditions: results[i].entries[1].title.split(': ')[1], 
         coordinates: data.cities[i].coordinates,
-        boxingBoundary: data.cities[i].boundingBox
       }
       
       responses.push(resultData);

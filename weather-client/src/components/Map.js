@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { GoogleApiWrapper, Map, Marker, InfoWindow} from 'google-maps-react';
+import { GoogleApiWrapper, Map, Marker, InfoWindow } from 'google-maps-react';
 import snow from '../images/snow.png'
 import cloud from '../images/cloud.png'
 import fog from '../images/fog.png'
@@ -13,6 +13,12 @@ import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
 import './style.css'
 
+const GOOGLE_API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
+
+/**
+ * Component for the Map container. Contains the embedded Google Map component,
+ *  and the side panel navigation component. 
+ */
 export class MapContainer extends Component {
 
   constructor(props) {
@@ -34,19 +40,29 @@ export class MapContainer extends Component {
     this.markerClick = this.markerClick.bind(this);
     this.menuClick = this.menuClick.bind(this);
     this.generateWeatherImage = this.generateWeatherImage.bind(this);
-    this.loadData = this.loadData.bind(this);
+    this.loadWeatherData = this.loadWeatherData.bind(this);
   }
 
+  /**
+   * Mounts the component on initial load. 
+   */
   componentDidMount() {
-    this.loadData()
+    this.loadWeatherData()
     this.weatherUpdater = setInterval(this.loadData, 600000);
   }
 
+  /**
+   * Unmounts the component. 
+   */
   componentWillUnmount() {
     clearInterval(this.weatherUpdater);
   }
 
-  async loadData() {
+  /**
+   * Makes an API call to the weather API, and sets the state 
+   * so the data is persisted in the component. 
+   */
+  async loadWeatherData() {
     try {
       const response = await agent.weatherForecast.getWeatherData();
 
@@ -62,6 +78,12 @@ export class MapContainer extends Component {
    }
  }
 
+ /**
+  * Event listener for the menu items. 
+  * 
+  * @param {JSON} city 
+  * @param {*} e 
+  */
   menuClick(city, e) {
     this.setState({
       center: {
@@ -72,6 +94,9 @@ export class MapContainer extends Component {
     })
   }
 
+  /**
+   * Event listener for map clicks
+   */
   mapClicked() {
     if (this.state.showingInfoWindow) {
       this.setState({
@@ -81,6 +106,13 @@ export class MapContainer extends Component {
     }
   }
 
+  /**
+   * Event listener for map markers. 
+   * 
+   * @param {*} props 
+   * @param {Marker} marker 
+   * @param {*} e 
+   */
   markerClick(props, marker, e) {
     this.setState({
       activeMarker: marker,
@@ -89,6 +121,11 @@ export class MapContainer extends Component {
     })
   }
 
+  /**
+   * Generates an appropriate image matching the current weather conditions of 
+   * a city. 
+   * @param {*} currentCondition 
+   */
   generateWeatherImage(currentCondition) {
     const condition = currentCondition.toString().toLowerCase(); 
 
@@ -161,7 +198,6 @@ export class MapContainer extends Component {
                 </div>
             </InfoWindow>
           }
-         
       </Map>
     </>
     )
@@ -169,5 +205,5 @@ export class MapContainer extends Component {
 }
 
 export default GoogleApiWrapper({
-  apiKey: ('AIzaSyD23xqn0jkx4uzRBASktvUdKBl37vgDH50'),
+  apiKey: (GOOGLE_API_KEY),
 })(MapContainer)

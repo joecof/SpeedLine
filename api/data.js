@@ -1,3 +1,6 @@
+/**
+ * Data obtained from Environment Canada. A database would be used to store this preliminary data in production. 
+ */
 module.exports = {
   cities: [{
     lang: 'en',
@@ -5,8 +8,7 @@ module.exports = {
     coordinates: {
       lat: 58.4374,
       lng: -129.9994
-    },
-    boundingBox: [58.38, 58.11, -130.38, -129.20]
+    }
   },
   {
     lang: 'en',
@@ -14,8 +16,7 @@ module.exports = {
     coordinates: {
       lat: 58.8050,
       lng: -122.6972
-    },
-    boundingBox: [58.50, 58.46, -122.46, -122.37]
+    }
   },
   {
     lang: 'en',
@@ -23,8 +24,7 @@ module.exports = {
     coordinates: {
       lat: 54.5182,
       lng: -128.6032
-    },
-    boundingBox: [54.32, 58.25, -128.39, -128.30]
+    }
   },
   {
     lang: 'en',
@@ -32,8 +32,7 @@ module.exports = {
     coordinates: {
       lat: 53.9171,
       lng: -122.7497
-    },
-    boundingBox: [54.02, 53.48, -122.53, -122.36]
+    }
   },
   {
     lang: 'en',
@@ -41,8 +40,7 @@ module.exports = {
     coordinates: {
       lat: 50.1163,
       lng: -122.9574
-    },
-    boundingBox: [50.11, 50.01, -123.07, -122.48]
+    }
   },
   {
     lang: 'en',
@@ -50,8 +48,7 @@ module.exports = {
     coordinates: {
       lat: 50.9981,
       lng: -118.1957
-    },
-    boundingBox: [51.03, 50.55, -118.14, -118.08]
+    }
   },
   {
     lang: 'en',
@@ -59,7 +56,6 @@ module.exports = {
     coordinates: {
       lat: 49.0955,
       lng: -116.5135
-    },
-    boundingBox: [49.07, 49.05, -116.32, -116.29]
+    }
   }]
 }
