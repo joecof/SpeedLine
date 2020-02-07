@@ -14,7 +14,7 @@ To start type into your terminal:
 
  The project should begin, and the project can be visited at localhost:3000 
  
- Visit the demo here: https://speedline-weathersystem.herokuapp.com/  (Development overlay)
+ Or you can visit the demo here: https://speedline-weathersystem.herokuapp.com/  (Development overlay)
   
 Key features: 
 
