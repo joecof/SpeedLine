@@ -7,10 +7,11 @@ To start type into your terminal:
       git clone https://github.com/joecof/SpeedLine.git
       cd weather-client 
       npm install 
-      cd ../api 
+      cd ..
+      cd api 
       npm install 
   
-      npm start
+      npm start (start point is inside directory api) 
 
  The project should begin, and the project can be visited at localhost:3000 
  
