@@ -1,6 +1,6 @@
 # SpeedLine
 
-A Weather System App as part of the Developer Evaluation Project from SpeedLine Solutions.
+A Weather System App as part of the Developer Evaluation Project from SpeedLine Solutions. Demo at https://speedline-weathersystem.herokuapp.com/ 
 
 To start type into your terminal: 
 
@@ -14,8 +14,6 @@ To start type into your terminal:
       npm start 
 
  The project should begin, and the project can be visited at localhost:3000 
- 
- Or you can visit the demo here: https://speedline-weathersystem.herokuapp.com/  (Development overlay)
   
 Key features: 
 
