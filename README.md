@@ -21,7 +21,7 @@ Key features:
 
       Weather data updates every 10 minutes. 
 
-      Upon clicking on the marker, the city name and current weather condition is displayed in an info-window. 
+      Upon clicking on the marker, the city name and current weather condition is displayed.
   
 
 ![Alt text](https://i.ibb.co/t8pWDj5/Screen-Shot-2020-02-06-at-11-40-59-PM.png "When Clicking a Marker")
